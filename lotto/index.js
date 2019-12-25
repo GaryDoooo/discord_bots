@@ -23,8 +23,29 @@ bot.on("message", msg => {
   if (msg.mentions.users.first() !== bot.user) {
     return;
   }
+  const args = msg.content.split(/ +/);
+  console.log(args);
   if (if_in(msg.content, "random")) {
     msg.reply(Math.floor(Math.random() * 15 + 1));
+  }
+  if (
+    args.length === 1 ||
+    if_in(msg.content, "help") ||
+    if_in(msg.content, "halp") ||
+    if_in(msg.content, "plzexplain") ||
+    if_in(msg.content, "pleaseexplain") ||
+    if_in(msg.content, "wot") ||
+    if_in(msg.content, "what") ||
+    if_in(msg.content, "wat") ||
+    if_in(msg.content, "nani")
+  ) {
+    console.log("print update.");
+    msg.reply(
+      "I've sent the stuff to <#bot-spam> in the Nastymold discord server."
+    );
+    //632376154518585356
+    var channel = bot.channels.find(x => x.name === "bot-spam");
+    channel.send("Hi <@" + msg.author.id + ">\n");
   }
 });
 
