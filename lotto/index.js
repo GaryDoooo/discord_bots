@@ -14,6 +14,10 @@ function if_in(input_string, keyword) {
 
 var lotto_list = [];
 const lotto_max = 2;
+// main channel HL staff role id "659396651815010304");
+const gm_role_id= "659396651815010304";
+// bot spam channel id 632376154518585356
+const bot_spam_channel_id="632376154518585356"
 
 bot.on("ready", () => {
   console.log("online");
@@ -47,7 +51,7 @@ bot.on("message", msg => {
       "I've sent the stuff to <#bot-spam> in the Nastymold discord server."
     );
     //632376154518585356
-    var channel = bot.channels.find(x => x.name === "bot-spam");
+    var channel = bot.channels.find(x => x.id === bot_spam_channel_id);
     channel.send(
       "<@" +
         msg.author.id +
@@ -70,7 +74,7 @@ bot.on("message", msg => {
   if (if_in(msg.content, "listhlstaff")) {
     // msg.reply("check out the JS console.");
     // console.log(msg.member.roles);
-    role = msg.guild.roles.get("659396651815010304");
+    role = msg.guild.roles.get(gm_channel_id);
     // console.log(role);
     if (typeof role !== "undefined") {
       console.log(role.members.map(m => m.user.id));
@@ -104,7 +108,7 @@ bot.on("message", msg => {
     }
   }
   if (if_in(msg.content, "remove")) {
-    role = msg.guild.roles.get("659396651815010304");
+    role = msg.guild.roles.get(gm_channel_id);
     if (typeof role !== "undefined") {
       var hl_staff = role.members.map(m => m.user.id);
       if (hl_staff.includes(msg.author.id) && args.length === 4) {
@@ -123,7 +127,8 @@ bot.on("message", msg => {
       } else {
         msg.reply(
           "Could not find user or user is not in the heart lotto.\n" +
-            "The command for removing someone from the heart lotto list is: '<@659463264429801492> remove USERNAME#TAG USERNAME#TAG'\n" +
+            "The command for removing someone from the heart lotto list is: "+
+		"'<@659463264429801492> remove USERNAME#TAG USERNAME#TAG'\n" +
             "remember to type the username and tag twice as confirmation."
         );
       }
