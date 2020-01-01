@@ -15,9 +15,9 @@ function if_in(input_string, keyword) {
 var lotto_list = [];
 const lotto_max = 2;
 // main channel HL staff role id "659396651815010304");
-const gm_role_id= "659396651815010304";
+const gm_role_id = "659396651815010304";
 // bot spam channel id 632376154518585356
-const bot_spam_channel_id="632376154518585356"
+const bot_spam_channel_id = "632376154518585356";
 
 bot.on("ready", () => {
   console.log("online");
@@ -47,34 +47,39 @@ bot.on("message", msg => {
     if_in(msg.content, "nani")
   ) {
     console.log("print update.");
-    msg.reply(
-      "I've sent the stuff to <#bot-spam> in the Nastymold discord server."
-    );
-    //632376154518585356
     var channel = bot.channels.find(x => x.id === bot_spam_channel_id);
-    channel.send(
-      "<@" +
-        msg.author.id +
-        "> Here is some info about the Sky Heart Lotto: \n" +
-        " - The lotto is first come first serve \n" +
-        " - We hold one heart loto at 11am PST every Wednesday " +
-        "and another on Saturday at 10pm PST \n" +
-        " - to enter, send a screenshot in #heart-lotto-screenshots, " +
-        "confirming that you have at least 4 candles to be able to send to the winner \n " +
-        " - You will also need to take a screenshot (and send it to #heart-lotto-screenshots)" +
-        " to confirm that you sent a heart to the winner. \n" +
-        " - Type '<@659463264429801492> listhlstaff' to get a list of the heart lotto staff\n" +
-        "Current candidates:" +
-        lotto_list.map(m => " " + m.tag) +
-        "\nthe total amount of people in the lotto is " +
-        lotto_list.length +
-        "."
-    );
+    try {
+      channel.send(
+        "<@" +
+          msg.author.id +
+          "> Here is some info about the Sky Heart Lotto: \n" +
+          " - The lotto is first come first serve \n" +
+          " - We hold one heart lotto at 11am PST every Wednesday " +
+          "and another on Saturday at 10pm PST \n" +
+          " - to enter, send a screenshot in #heart-lotto-screenshots, " +
+          "confirming that you have at least 4 candles to be able to send to the winner \n " +
+          " - You will also need to take a screenshot (and send it to #heart-lotto-screenshots)" +
+          " to confirm that you sent a heart to the winner. \n" +
+          " - Type '<@659463264429801492> listhlstaff' to get a list of the heart lotto staff\n" +
+          "Current candidates:" +
+          lotto_list.map(m => " " + m.tag) +
+          "\nthe total amount of people in the lotto is " +
+          lotto_list.length +
+          "."
+      );
+      msg.reply(
+        "I've sent the stuff to <#bot-spam> in the Nastymold discord server."
+      );
+    } catch (e) {
+      // console.log("Error", e.stack);
+      console.log("Error", e.name, e.message);
+      msg.reply("Can't find output channel. or output errors.");
+    }
   }
   if (if_in(msg.content, "listhlstaff")) {
     // msg.reply("check out the JS console.");
     // console.log(msg.member.roles);
-    role = msg.guild.roles.get(gm_channel_id);
+    role = msg.guild.roles.get(gm_role_id);
     // console.log(role);
     if (typeof role !== "undefined") {
       console.log(role.members.map(m => m.user.id));
@@ -127,8 +132,8 @@ bot.on("message", msg => {
       } else {
         msg.reply(
           "Could not find user or user is not in the heart lotto.\n" +
-            "The command for removing someone from the heart lotto list is: "+
-		"'<@659463264429801492> remove USERNAME#TAG USERNAME#TAG'\n" +
+            "The command for removing someone from the heart lotto list is: " +
+            "'<@659463264429801492> remove USERNAME#TAG USERNAME#TAG'\n" +
             "remember to type the username and tag twice as confirmation."
         );
       }
